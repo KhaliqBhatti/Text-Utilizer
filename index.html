@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text-Utilizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .btn-div > button {
+        /* padding-left: 30px ; */
+        border: 2px solid red;
+        border-radius: 15px;
+        background-color: ivory;
+      }
+    </style>
+  </head>
+
+  <body class="h-screen bg-[#252525]">
+    <div class="w-full h-[70vh] flex justify-center items-center flex-col">
+      <textarea
+        name=""
+        id="textarea"
+        placeholder="Enter the Text"
+       
+        class="w-[90%] md:w-[60%] xl:w-[40%]  mx-auto h-[30vh] border-2 border-orange-600 rounded-3xl px-3 py-3 text-2xl text-[#bc25fd]"
+      ></textarea>
+      <div class="btn-div w-[90%] md:w-[80%] xl:w-[70%] flex flex-wrap justify-evenly mt-5 gap-4">
+        <button class="px-4 py-1 uppercase">UpperCase</button>
+        <button class="px-4 py-1 lowercase">LowerCase</button>
+        <button class="px-4 py-1 charset1">Characters</button>
+        <button class="px-4 py-1 words">Words</button>
+        <button class="px-4 py-1 backspace">BackSpace</button>
+        <button class="px-4 py-1 clear">Clear</button>
+        <button class="px-4 py-1 capital">Capital</button>
+        <button class="px-4 py-1 copy">Copy</button>
+        <button class="px-4 py-1 removeSpaces">Remove Space</button>
+      </div>
+    </div>
+    <div class="flex justify-center items-start  py-3 text-white">
+      <div class=" data w-[90%] md:w-[80%] xl:w-[70%] border-[1px] border-[#556d] py-3 "></div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".uppercase").click(function () {
+          var upper = $("#textarea")
+            .val($("#textarea").val().toUpperCase())
+            .val();
+
+          $(".data").append(upper);
+          //    $('#textarea').val(($('#textarea').val())).val('')
+        });
+        $(".lowercase").click(function () {
+          let lower = $("#textarea")
+            .val($("#textarea").val().toLowerCase())
+            .val();
+          $(".data").append(lower);
+        });
+        $(".words").click(function () {
+          let charset = $("#textarea").val();
+          let words = charset.trim().split(/\s+/);
+          let wordsCount = words.length;
+          $(".data").append(wordsCount);
+        });
+        $(".backspace").click(function () {
+          console.log($("#textarea").val());
+          var a = $("#textarea").val().slice(0, -1);
+          $("#textarea").val(a);
+        });
+        $(".clear").click(function () {
+          $("#textarea").val("");
+          $(".data").empty();
+        });
+        $(".capital").click(function () {
+          let capital = $("#textarea")
+            .val()
+            .split(/\s+/)
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+
+          $("#textarea").val(capital);
+
+          $(".data").append(capital);
+        });
+
+        $(".copy").click(function () {
+          $("#textarea").select();
+          let textValue = document.execCommand("copy");
+          if (textValue) {
+            let copiedText = $("#textarea").val();
+            alert("Text Copied");
+            $(".data").append(`<p>${copiedText}</p>`);
+          } else {
+            alert("Failed to copy text");
+          }
+        });
+        $(".removeSpaces").click(function () {
+          let removeSpaces = $("#textarea").val();
+          var emptySpaces = removeSpaces.trim();
+
+          $(".data").append(removeSpaces);
+        });
+        $(".charset1").click(function () {
+            let text = $("#textarea").val()
+            let trimValue = text.trim()
+            console.log(trimValue,'trim value');
+            let length = trimValue.length;
+            console.log(length, 'length is here')
+            $(".data").append('Total characters Length is ',length)
+
+        });
+     
+      });
+    </script>
+  </body>
+</html>
